@@ -1,0 +1,19 @@
+{# templates/reset_request.html #}
+{% extends "base.html" %}
+{% block title %}Restablecer Contraseña{% endblock %}
+{% block content %}
+    <div class="card">
+        <h1>Restablecer Contraseña</h1>
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.email.label }}<br>
+                {{ form.email(class="form-control") }}
+                {% for error in form.email.errors %}
+                    <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página No Encontrada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Reserva de Vuelos</h1>
+    </header>
+    <nav>
+        {% if current_user.is_authenticated %}
+            <p>Hola, {{ current_user.username }}! |
+            <a href="{{ url_for('profile') }}">Mi Perfil</a> |
+            <a href="{{ url_for('search_flights') }}">Buscar Vuelos</a> |
+            <a href="{{ url_for('my_bookings') }}">Mis Reservas</a> |
+            {% if current_user.id == 1 %}
+                <a href="{{ url_for('add_flight') }}">Añadir Vuelo</a> |
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Cerrar Sesión</a></p>
+        {% else %}
+            <a href="{{ url_for('login') }}">Iniciar Sesión</a> |
+            <a href="{{ url_for('register') }}">Registrarse</a>
+        {% endif %}
+    </nav>
+    <div class="container text-center">
+        <h2>Error 404: Página No Encontrada</h2>
+        <p>Lo sentimos, la página que buscas no existe.</p>
+        <p><a href="{{ url_for('home') }}" class="btn">Volver al inicio</a></p>
+    </div>
+    <footer>
+        <p>&copy; {{ now.year }} Sistema de Reserva de Vuelos. Todos los derechos reservados.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

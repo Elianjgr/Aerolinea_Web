@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Aeropuerto Nacional Luisa Cáceres de Arismendi{% endblock %}
+
+{% block content %}
+    {# Nuevo contenedor para la sección de héroe #}
+    <div class="hero-area">
+        {# El slideshow de fondo #}
+        <div class="slideshow-background">
+                    <div class="carousel">
+                        <img src="../static/css/images/aeropuerto_barinas_1.jpg">
+                        <img src="../static/css/images/aeropuerto_barinas_2.jpg">
+                        <img src="../static/css/images/aeropuerto_barinas_3.jpg">
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const carousel = document.querySelector('.carousel');
+
+                                function moveCarousel() {
+                                    // Mueve el carrusel una imagen a la izquierda
+                                    carousel.appendChild(carousel.firstElementChild);
+                                }
+
+                                // Llama a la función moveCarousel cada 3 segundos
+                                setInterval(moveCarousel, 10000);
+                            });
+                        </script>
+                    </div>
+            {# Agrega más si tienes más imágenes (img4, img5, etc.) #}
+        </div>
+
+        {# El contenido (texto) que va encima del slideshow #}
+        <div class="hero-section-content">
+            <h1>Bienvenido Al Aeropuerto Nacional Luisa Cáceres De Arismendi</h1>
+            <p>Encuentra tu próximo destino desde Barinas.</p>
+        </div>
+    </div> {# Fin de hero-area #}
+
+    <div class="info-section">
+        <h2>Acerca del Aeropuerto</h2>
+        <p>El Aeropuerto Nacional Luisa Cáceres de Arismendi (Código IATA: BNS) es el principal aeropuerto que sirve a la ciudad de Barinas y sus alrededores. Desempeña un papel vital en la conectividad aérea de la región, facilitando el transporte de pasajeros y carga a diversos destinos nacionales.</p>
+        <p>Con instalaciones diseñadas para la comodidad y seguridad de los viajeros, nos esforzamos por ofrecer una experiencia de vuelo eficiente y agradable. Desde aquí, podrás encontrar y reservar vuelos con las principales aerolíneas que operan en la región.</p>
+    </div>
+
+    <div class="featured-flights-section">
+        <h2>Destinos Populares desde Barinas</h2>
+        {# Aquí podrías añadir una lógica para mostrar vuelos populares o próximos desde Barinas #}
+        {# Por ahora, es un placeholder #}
+        <div class="flight-cards-grid">
+            <div class="flight-card">
+                <h3>Vuelos a Maiquetía (CCS)</h3>
+                <p>La conexión principal con la capital.</p>
+                <a href="{{ url_for('search_flights', destination_id=maiquetia_id_placeholder) }}" class="btn btn-sm">Ver Vuelos</a>
+            </div>
+            <div class="flight-card">
+                <h3>Vuelos a Maracaibo (MAR)</h3>
+                <p>Conecta con la región occidental del país.</p>
+                <a href="{{ url_for('search_flights', destination_id=maracaibo_id_placeholder) }}" class="btn btn-sm">Ver Vuelos</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

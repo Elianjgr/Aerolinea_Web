@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Buscar Vuelos desde Barinas{% endblock %}
+
+{% block content %}
+    <h1>Buscar Vuelos desde el Aeropuerto Nacional Luisa Cáceres de Arismendi</h1>
+
+    <form method="POST" action="{{ url_for('search_flights') }}">
+        {# No necesitamos el csrf_token si no estamos usando Flask-WTF para este formulario #}
+        {# Si usas Flask-WTF para el formulario de búsqueda, asegúrate de pasarlo y usar form.csrf_token #}
+
+        <div class="form-group">
+            <label for="origin_airport">Origen:</label>
+            {# Mostramos el aeropuerto de Barinas como texto fijo y pasamos su ID oculto #}
+            <input type="text" id="origin_airport_display" value="{{ barinas_airport.city }} ({{ barinas_airport.code }})" class="form-control" disabled>
+            <input type="hidden" id="origin_airport" name="origin_airport" value="{{ selected_origin }}">
+        </div>
+
+        <div class="form-group">
+            <label for="destination_airport">Destino:</label>
+            <select id="destination_airport" name="destination_airport" class="form-control" required>
+                <option value="">Seleccione un destino</option>
+                {% for airport in airports %}
+                    {# Asegúrate de no listar Barinas como destino si no hay vuelos de vuelta desde Barinas a Barinas #}
+                    {% if airport.id != selected_origin|int %}
+                        <option value="{{ airport.id }}" {% if airport.id == selected_destination|int %}selected{% endif %}>
+                            {{ airport.city }} ({{ airport.code }})
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="departure_date">Fecha de Salida:</label>
+            <input type="date" id="departure_date" name="departure_date" class="form-control" value="{{ selected_date }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Buscar Vuelos</button>
+    </form>
+
+    <hr>
+
+    {% if flights %}
+        <h2>Resultados de Vuelos desde Barinas</h2>
+        <div class="flight-results">
+            {% for flight in flights %}
+                <div class="flight-card">
+                    <h3>Vuelo {{ flight.flight_number }}</h3>
+                    <p><strong>Aerolínea:</strong> {{ flight.airline.name }}</p>
+                    <p><strong>Ruta:</strong> {{ flight.origin_airport.city }} ({{ flight.origin_airport.code }}) &rarr; {{ flight.destination_airport.city }} ({{ flight.destination_airport.code }})</p>
+                    <p><strong>Salida:</strong> {{ flight.departure_datetime.strftime('%d/%m/%Y %H:%M') }}</p>
+                    <p><strong>Llegada:</strong> {{ flight.arrival_datetime.strftime('%d/%m/%Y %H:%M') }}</p>
+                    <p><strong>Precio:</strong> ${{ "%.2f"|format(flight.price) }}</p>
+                    <p><strong>Asientos Disponibles:</strong> {{ flight.available_seats }}</p>
+                    <p><strong>Asientos Totales:</strong> {{ flight.total_seats }}</p>
+                    <a href="{{ url_for('flight_details', flight_id=flight.id) }}" class="btn">Ver Detalles</a>
+                    {% if current_user.is_authenticated %}
+                        {# Formulario de reserva simplificado #}
+                        <form action="{{ url_for('book_flight', flight_id=flight.id) }}" method="POST" style="display:inline-block; margin-left: 10px;">
+                            <label for="num_passengers_{{ flight.id }}">Pasajeros:</label>
+                            <input type="number" id="num_passengers_{{ flight.id }}" name="num_passengers" value="1" min="1" max="{{ flight.available_seats }}" style="width: 60px;">
+                            <button type="submit" class="btn btn-success">Reservar</button>
+                        </form>
+                    {% else %}
+                        <p class="info-message">Inicia sesión para reservar este vuelo.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('search_flights', page=pagination.prev_num) }}" class="btn">&laquo; Anterior</a>
+            {% endif %}
+            {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if pagination.page == page_num %}
+                        <span class="btn current-page">{{ page_num }}</span>
+                    {% else %}
+                        <a href="{{ url_for('search_flights', page=page_num) }}" class="btn">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    <span class="ellipsis">...</span>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <a href="{{ url_for('search_flights', page=pagination.next_num) }}" class="btn">Siguiente &raquo;</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>No se encontraron vuelos para los criterios seleccionados.</p>
+        {% if not session.get('last_search') %}
+            <p>Intenta seleccionar un destino y fecha para ver los vuelos disponibles desde Barinas.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

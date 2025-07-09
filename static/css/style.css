@@ -1,0 +1,381 @@
+/* --- 1. Estilos Generales y Reseteo --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #adb3b9; /* Gris claro para el fondo general */
+    color: #343A40; /* Gris oscuro para el texto principal */
+}
+
+/* Contenedor central para el contenido principal (ancho limitado y centrado) */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- 2. Estilos del Encabezado (Header) y Navegación --- */
+header {
+    background-color: #023c7e; /* Azul Oscuro (nuevo) */
+    color: white; /* Texto blanco para contrastar */
+    padding: 50px 0;
+}
+
+/* Contenedor flex para el header */
+.header-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 2.2em;
+    line-height: 1.2;
+    text-align: left;
+    white-space: normal;
+}
+
+/* Estilos para el enlace del logo (el título) */
+.logo-link {
+    text-decoration: none;
+    color: inherit; /* Hereda el color blanco del header */
+    display: block;
+}
+
+/* Estilos comunes para las listas de navegación */
+.main-nav ul,
+.user-auth-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+/* Para empujar la navegación de usuario/autenticación a la derecha */
+.user-auth-nav {
+    flex-grow: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+}
+
+/* Estilos de los enlaces/botones de navegación */
+nav ul li a {
+    color: white; /* Texto blanco */
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil semi-transparente */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil semi-transparente */
+    font-weight: normal;
+    white-space: nowrap;
+    font-size: 0.95em;
+    outline: none;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.25); /* Más opaco al hover */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+nav ul li a:focus,
+nav ul li a:active {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.35); /* Más opaco al activo/foco */
+    box-shadow: 0 0 0 2px #FFD700; /* Borde de foco amarillo brillante */
+}
+
+/* --- 3. Estilos de la Sección Principal (Main Content) --- */
+main {
+    padding-top: 20px; /* Puedes ajustar este valor si el contenido se pega mucho al hero-area */
+    min-height: calc(100vh - 120px); /* Ajusta para que el footer esté abajo (100vh - header_height - footer_height) */
+}
+
+/* --- 4. Estilos del Pie de Página (Footer) --- */
+footer {
+    background-color: #002B5C; /* Azul Oscuro, igual que el header */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+/* --- 5. Estilos de Mensajes Flash (Alertas) --- */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.flashes .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flashes .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.flashes .info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* --- 6. Estilos de Botones Generales --- */
+.btn {
+    display: inline-block;
+    background-color: #D82C2C; /* Rojo Principal (nuevo) */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #B02323; /* Un rojo ligeramente más oscuro al pasar el ratón */
+}
+
+/* --- 7. Estilos de Formularios y Tarjetas (Cards) --- */
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form input[type="datetime-local"], /* Añadido para el campo de fecha/hora */
+form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Para que el padding no añada ancho */
+}
+
+.card {
+    background-color: white; /* Fondo blanco para tarjetas */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* --- 8. Estilos de la Sección de Héroe (Slideshow y Contenido Principal) --- */
+
+/* Contenedor principal de la sección de héroe (incluye slideshow y contenido) */
+.hero-area {
+    position: relative;
+    width: 100%;
+    height: 600px; /* Altura de tu sección de héroe */
+    overflow: hidden;
+    z-index: 1; /* Asegura que esté por encima de otros elementos si hay conflicto */
+    /* Si el hero-area está dentro de <main class="container">, este margin-top lo sacará de ese padding */
+    margin-top: -20px; /* Compensa el padding-top del .container de main */
+}
+
+/* Contenedor del slideshow de fondo */
+.slideshow-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Asegura que el fondo esté detrás del contenido principal */
+}
+
+/* Estilos para cada imagen individual del slideshow */
+.slideshow-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover; /* Cubre todo el área sin distorsionar */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat;
+    opacity: 0; /* Todas las imágenes comienzan ocultas */
+    animation: fade-slideshow 18s infinite; /* 18s = 3 imágenes * 6s por imagen (ver keyframes) */
+}
+
+/* Asigna las imágenes de fondo a cada div */
+.slideshow-image.img1 {
+    background-image: url('../css/images/aeropuerto_barinas_1.jpg');
+    animation-delay: 0s; /* La primera imagen aparece de inmediato */
+}
+
+.slideshow-image.img2 {
+    background-image: url('../css/images/aeropuerto_barinas_2.jpg');
+    animation-delay: 6s; /* La segunda imagen aparece después de 6 segundos */
+}
+
+.slideshow-image.img3 {
+    background-image: url('../css/images/aeropuerto_barinas_3.jpg');
+    animation-delay: 12s; /* La tercera imagen aparece después de 12 segundos */
+}
+
+/* Define la animación de fade */
+@keyframes fade-slideshow {
+    0% { opacity: 0; } /* Comienza oculto */
+    10% { opacity: 1; } /* Aparece (fade in) */
+    30% { opacity: 1; } /* Permanece visible */
+    40% { opacity: 0; } /* Desaparece (fade out) */
+    100% { opacity: 0; } /* Permanece oculto hasta que el ciclo se reinicie */
+}
+
+/* Estilo para el contenido de texto que va encima del slideshow */
+.hero-section-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente para mejor legibilidad */
+    z-index: 2; /* Asegura que el contenido esté por encima del fondo */
+}
+
+.hero-section-content h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.hero-section-content p {
+    font-size: 1.5em;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* --- 9. Estilos de Secciones Adicionales en Index.html --- */
+.info-section,
+.featured-flights-section {
+    background-color: white; /* Fondo blanco para estas secciones */
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-section h2,
+.featured-flights-section h2 {
+    text-align: center;
+    color: #002B5C; /* Azul Oscuro para los títulos de sección */
+    margin-bottom: 20px;
+}
+
+.flight-card {
+    background-color: #F8F9FA; /* Gris claro para el fondo de las tarjetas de vuelo */
+    border: 1px solid #E9ECEF; /* Borde gris más claro */
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.flight-card h3 {
+    color: #D82C2C; /* Rojo Principal para los títulos de las tarjetas de vuelo */
+    margin-bottom: 10px;
+}
+
+/* --- 10. Media Queries para Responsividad (Opcional pero recomendado) --- */
+@media (max-width: 992px) { /* Para pantallas medianas, como tablets */
+    .header-flex-container {
+        flex-direction: column; /* Apila el logo y los navs */
+        align-items: center;
+        padding: 0 15px; /* Ajusta el padding lateral en pantallas más pequeñas */
+        gap: 15px; /* Espacio entre el logo y los navs apilados */
+    }
+
+    header .logo h1 {
+        font-size: 2em; /* Ajuste de tamaño */
+        text-align: center; /* Centra el título cuando está apilado */
+        margin-bottom: 0; /* Elimina el margen inferior extra si ya hay gap en el padre */
+    }
+
+    .main-nav,
+    .user-auth-nav {
+        width: 100%; /* Ocupan todo el ancho disponible */
+        justify-content: center; /* Centra sus propios botones */
+        margin-top: 0; /* Elimina el margin-top si ya hay gap en el padre */
+    }
+
+    .main-nav ul,
+    .user-auth-nav ul {
+        gap: 15px; /* Reduce el gap en pantallas más pequeñas */
+    }
+
+    nav ul li a {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    header .logo h1 {
+        font-size: 1.8em; /* Más pequeño para móviles */
+    }
+    .hero-area {
+        height: 400px;
+    }
+    .hero-section-content h1 {
+        font-size: 2em;
+    }
+    .hero-section-content p {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    nav ul li a {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+    .hero-area {
+        height: 300px;
+    }
+    .hero-section-content h1 {
+        font-size: 1.5em;
+    }
+    .hero-section-content p {
+        font-size: 1em;
+    }
+}

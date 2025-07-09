@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+    <h1>Mis Reservas</h1>
+    {% if bookings %}
+        <div class="booking-list">
+            {% for booking in bookings %}
+                <div class="booking-card card">
+                    <h3>Reserva #{{ booking.id }}</h3>
+                    <p><strong>Vuelo:</strong> {{ booking.flight.flight_number }}</p>
+                    <p><strong>Ruta:</strong> {{ booking.flight.origin_airport.city }} ({{ booking.flight.origin_airport.code }}) &rarr; {{ booking.flight.destination_airport.city }} ({{ booking.flight.destination_airport.code }})</p>
+                    <p><strong>Fecha de Salida:</strong> {{ booking.flight.departure_datetime.strftime('%d/%m/%Y %H:%M') }}</p>
+                    <p><strong>Número de Pasajeros:</strong> {{ booking.num_passengers }}</p>
+                    <p><strong>Precio Total:</strong> ${{ "%.2f"|format(booking.total_price) }}</p>
+                    <p><strong>Fecha de Reserva:</strong> {{ booking.booking_date.strftime('%d/%m/%Y %H:%M') }}</p>
+                    {# Puedes añadir un botón para cancelar reserva si implementas la lógica #}
+                    <form action="{{ url_for('cancel_booking', booking_id=booking.id) }}" method="POST" style="display:inline-block;">
+                        <button type="submit" class="btn btn-danger">Cancelar Reserva</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="card">Aún no tienes reservas de vuelos. <a href="{{ url_for('search_flights') }}">¡Busca uno ahora!</a></p>
+    {% endif %}
+{% endblock %}

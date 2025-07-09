@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Añadir Vuelo{% endblock %}
+
+{% block content %}
+    <h1>Añadir Nuevo Vuelo Desde el Aeropuerto de Barinas</h1>
+    <form method="POST" class="card">
+        {{ form.csrf_token }}
+
+        <div class="form-group">
+            {{ form.flight_number.label }}<br>
+            {{ form.flight_number(class="form-control") }}
+            {% for error in form.flight_number.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label>Origen:</label><br>
+            <input type="text" value="{{ barinas_airport.city }} ({{ barinas_airport.code }})" class="form-control" disabled>
+            {# No necesitas un hidden_tag() para form.origin_airport si ya asignas el valor en app.py #}
+        </div>
+
+        <div class="form-group">
+            {{ form.destination_airport.label }}<br>
+            {{ form.destination_airport(class="form-control") }}
+            {% for error in form.destination_airport.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.airline.label }}<br>
+            {{ form.airline(class="form-control") }}
+            {% for error in form.airline.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+
+        {# *** Asegúrate de que estas líneas coincidan con los nombres de campo en tu AddFlightForm *** #}
+        <div class="form-group">
+            {{ form.departure_datetime.label }}<br>
+            {{ form.departure_datetime(class="form-control", type="datetime-local") }} {# Añade type="datetime-local" para el input HTML #}
+            {% for error in form.departure_datetime.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.arrival_datetime.label }}<br>
+            {{ form.arrival_datetime(class="form-control", type="datetime-local") }} {# Añade type="datetime-local" para el input HTML #}
+            {% for error in form.arrival_datetime.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        {# *** FIN de la revisión de campos *** #}
+
+        <div class="form-group">
+            {{ form.price.label }}<br>
+            {{ form.price(class="form-control") }}
+            {% for error in form.price.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.total_seats.label }}<br>
+            {{ form.total_seats(class="form-control") }}
+            {% for error in form.total_seats.errors %}
+                <span style="color: red; font-size: 0.9em;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+{% endblock %}

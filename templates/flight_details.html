@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Vuelo {{ flight.flight_number }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Detalles del Vuelo</h1>
+    </header>
+    <nav>
+        {% if current_user.is_authenticated %}
+            <p>Hola, {{ current_user.username }}! |
+            <a href="{{ url_for('profile') }}">Mi Perfil</a> |
+            <a href="{{ url_for('search_flights') }}">Buscar Vuelos</a> |
+            <a href="{{ url_for('my_bookings') }}">Mis Reservas</a> |
+            <a href="{{ url_for('logout') }}">Cerrar Sesión</a></p>
+        {% else %}
+            <a href="{{ url_for('login') }}">Iniciar Sesión</a> |
+            <a href="{{ url_for('register') }}">Registrarse</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <h2>Vuelo {{ flight.flight_number }}</h2>
+
+        <div class="flight-detail-item"><strong>Aerolínea:</strong> {{ flight.airline.name }}</div>
+        <div class="flight-detail-item"><strong>Origen:</strong> {{ flight.origin_airport.city }} ({{ flight.origin_airport.code }})</div>
+        <div class="flight-detail-item"><strong>Destino:</strong> {{ flight.destination_airport.city }} ({{ flight.destination_airport.code }})</div>
+        <div class="flight-detail-item"><strong>Salida:</strong> {{ flight.departure_datetime.strftime('%d/%m/%Y %H:%M') }}</div>
+        <div class="flight-detail-item"><strong>Llegada:</strong> {{ flight.arrival_datetime.strftime('%d/%m/%Y %H:%M') }}</div>
+        <div class="flight-detail-item"><strong>Precio por pasajero:</strong> ${{ "%.2f"|format(flight.price) }}</div>
+        <div class="flight-detail-item"><strong>Asientos Disponibles:</strong> {{ flight.available_seats }}</div>
+
+        {% if flight.available_seats > 0 %}
+            <h3>Realizar Reserva</h3>
+            <form action="{{ url_for('book_flight', flight_id=flight.id) }}" method="post">
+                <label for="num_passengers">Número de Pasajeros:</label><br>
+                <input type="number" id="num_passengers" name="num_passengers" value="1" min="1" max="{{ flight.available_seats }}" required><br><br>
+                <input type="submit" value="Confirmar Reserva">
+            </form>
+        {% else %}
+            <p style="color: red;">Lo sentimos, este vuelo está agotado.</p>
+        {% endif %}
+
+        <p><a href="{{ url_for('search_flights') }}">Volver a la búsqueda de vuelos</a></p>
+    </div>
+    <footer>
+        <p>&copy; {{ now.year }} Sistema de Reserva de Vuelos. Todos los derechos reservados.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
