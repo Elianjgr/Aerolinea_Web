@@ -9,3 +9,4 @@ Flask-Mail==0.9.1
 Flask-Paginate==2024.4.12
 wtforms_sqlalchemy==0.4.2
 flask_wtf==1.2.2
+email_validator==2.2.0
