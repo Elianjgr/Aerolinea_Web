@@ -438,7 +438,7 @@ def add_test_data():
 
         db.session.add_all([barinas, maiquetia, maracaibo, valencia])
         db.session.commit()
-
+#aqui estuvo Geo buuajajajajjaja
         # Añadir aerolíneas
         laser = Airline(name='Laser Airlines', logo_url='https://example.com/laser.png')
         conviasa = Airline(name='Conviasa', logo_url='https://example.com/conviasa.png')
