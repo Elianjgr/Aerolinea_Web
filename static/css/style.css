@@ -379,3 +379,21 @@ form select {
         font-size: 1em;
     }
 }
+
+.header-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.logo img {
+    max-width: 80px; /* Cambia este valor para hacer la imagen más pequeña */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block;
+    margin: 0 auto;
+}
